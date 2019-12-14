@@ -1,4 +1,5 @@
-import { userLogin } from "../remote/Project1UserLogin"
+import { userLogin } from "../remote/Project1User"
+
 export const uLoginTypes = {
     INVALID_CREDENTIALS: 'USER_LOGIN_INVALID_CREDENTIALS',
     SUCCESSFUL_LOGIN: 'USER_LOGIN_SUCCESSFUL_LOGIN',
