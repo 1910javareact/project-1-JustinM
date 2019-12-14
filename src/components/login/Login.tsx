@@ -1,8 +1,13 @@
 import React, { SyntheticEvent } from 'react';
 import { Form, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
-import { project1Login } from '../../remote/Project1User';
+import { User } from '../../models/user';
 
-export class Login extends React.Component<any, any> {
+interface ILoginProps {
+    user:User
+    uLogin:(u:string, p:string) => void
+}
+
+export class Login extends React.Component<ILoginProps, any> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -27,12 +32,7 @@ export class Login extends React.Component<any, any> {
 
     submitLogin = async (e: SyntheticEvent) => {
         e.preventDefault();
-        e.stopPropagation();
-        const user = await project1Login(this.state.username, this.state.password);
-        this.setState({
-            ...this.state,
-            user
-        });
+        this.props.uLogin(this.state.username, this.state.password)
     }
     render() {
         return (

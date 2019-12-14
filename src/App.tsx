@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import { Login } from './components/login/Login';
+import Login from './components/login/LoginContainer';
 import B99Nav from './components/navbar/Navbar';
 import { UserComponent } from './components/user-components/UserComponent';
 
