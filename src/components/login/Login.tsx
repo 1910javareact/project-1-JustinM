@@ -37,10 +37,10 @@ export class Login extends React.Component<ILoginProps, any> {
     render() {
         return (
             <div>
-                <Form>
+                <Form onSubmit={this.submitLogin}>
                     <Row form>
                         <Col md={6}>
-                            <FormGroup onSubmit={this.submitLogin}>
+                            <FormGroup>
                                 <Label for='exampleUsername'>Username</Label>
                                 <Input value={this.state.username} onChange={this.updateUsername} type='text' name='username' id='exampleUsername' placeholder='Enter username' />
                             </FormGroup>
@@ -54,6 +54,7 @@ export class Login extends React.Component<ILoginProps, any> {
                     </Row>
                     <Button>Sign in</Button>
                 </Form>
+                <p>{this.props.user.username}</p>
             </div>
         );
     }

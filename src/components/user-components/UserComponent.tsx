@@ -1,4 +1,5 @@
 import React from 'react';
+//import { getUser } from '../../remote/UserInfo';
 
 interface IUserState {
     user: string;
@@ -22,12 +23,12 @@ export class UserComponent extends React.Component<any, IUserState> {
     // async componentDidMount() {
     //     await this.getUserInfo();
     // }
-    // render() {
-    //     return (
-    //         <div>
-    //             <h1>You are logged in as:</h1>
-    //             <h2>{this.state.user}</h2>
-    //         </div>
-    //     );
-    // }
+    render() {
+        return (
+            <div>
+                <h1>You are logged in as:</h1>
+                <h2>{this.state.user}</h2>
+            </div>
+        );
+    }
 }

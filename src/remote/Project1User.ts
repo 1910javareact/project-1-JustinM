@@ -1,4 +1,4 @@
-import { userClient } from "./Project1UserClient"
+import { userClient } from "./Project1Client"
 
 export async function userLogin(username: string, password: string) {
     const credentials = {
