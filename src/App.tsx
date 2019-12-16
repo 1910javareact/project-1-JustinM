@@ -3,9 +3,10 @@ import './App.css';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import Login from './components/login/LoginContainer';
 import B99Nav from './components/navbar/Navbar';
-import { UserComponent } from './components/user-components/UserComponent';
+//import { UserComponent } from './components/user-components/UserComponent';
 import { Provider } from 'react-redux';
 import { store } from './Store'
+import UserDisplay from './components/user-display/UserDisplayContainer';
 
 const App: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const App: React.FC = () => {
           </nav>
           <header className='App-header'>
             <Switch>
-              <Route path='/user' component={UserComponent} />
+              <Route path='/user' component={UserDisplay} />
               <Route path='/' component={Login} />
             </Switch>
           </header>
