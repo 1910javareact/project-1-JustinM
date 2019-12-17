@@ -63,3 +63,30 @@ export const getAllUsersAPI = async () => {
         throw new Error('Something went wrong')
     }
 }
+
+export async function updateUserAPI(user_id: number, username: string, first_name: string, last_name: string, email: string) {
+    const update = {
+        user_id,
+        username,
+        first_name,
+        last_name,
+        email
+    }
+    try {
+        const response = await userClient.patch('/user', update)
+        if(response.status === 201) {
+            return {
+                status: response.status,
+                body: response.data
+            }
+        } else {
+            return {
+                status: response.status,
+                body: undefined
+            }
+        }
+    } catch (e) {
+        console.log(e);
+        throw new Error('Something went wrong')
+    }
+}

@@ -1,9 +1,10 @@
 import axios from 'axios'
+import { environment } from '../../environment'
 
 export const userClient = axios.create({
-    baseURL: 'http://localhost:1101',
+    withCredentials:true,
+    baseURL: environment.baseUrl,
     headers: {
         'Content-Type':'application/json'
-    },
-    withCredentials:true
+    }
 })

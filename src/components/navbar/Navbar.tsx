@@ -17,7 +17,7 @@ const Example = (props: any) => {
               <NavLink href='/user'>User</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href='https://github.com/reactstrap/reactstrap'>GitHub</NavLink>
+              <NavLink href='/reimbursement'>Reimbursements</NavLink>
             </NavItem>
           </Nav>
         </Collapse>

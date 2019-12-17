@@ -1,6 +1,7 @@
 import { IState } from "../../reducers";
 import { connect } from "react-redux";
-import { UserDisplay } from "./UserDisplay";
+import { ReimDisplay } from "./ReimComponent";
+import { rUpdate } from "../../action-mappers/reim-update-action-mapper"
 
 const mapStateToProps = (state: IState, ownProps: any) => {
     return {
@@ -11,4 +12,8 @@ const mapStateToProps = (state: IState, ownProps: any) => {
     }
 }
 
-export default connect(mapStateToProps)(UserDisplay)
+const mapDispatchToProps = {
+    rUpdate
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReimDisplay)
