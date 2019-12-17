@@ -4,7 +4,7 @@ let devEnvironment = {
 }
 
 let prodEnvironment = {
-    baseUrl: 'http://http://35.170.81.123:1101'
+    baseUrl: 'http://35.170.81.123:1101'
 }
 
 export let environment = {
