@@ -24,4 +24,4 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: 'project-1-JustinM/build'
+  base-directory: 'build'
