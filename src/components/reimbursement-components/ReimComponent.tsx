@@ -3,35 +3,24 @@ import { Reimbursement } from '../../models/reimbursement';
 import { User } from '../../models/user';
 import { Role } from '../../models/role';
 import { getUserById } from '../../remote/project1-clients/Project1User';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button, Table } from 'reactstrap';
+import { ReimburseDisplayRow } from './ReimburseDisplayRow';
 
 interface IReimDisplayProps {
     user: User
     reimburse: Reimbursement
-    rUpdate: (id: number, author: number, amount: number, submitted: number, resolved: number, description: string, resolver: number, status: number, type: number) => void;
+    rUpdate: (id: number, author: number, amount: number, submitted: string, resolved: string, description: string, resolver: number, status: number, type: number) => void;
+    rFindByStatus: (status: number) => void
 }
 
-interface IReimDisplayState {
-    userById: User
-    id: any
-    author: any
-    amount: any
-    submitted: any
-    resolved: any
-    description: any
-    resolver: any
-    status: any
-    type: any
-    success: string
-}
-
-export class ReimDisplay extends React.Component<IReimDisplayProps, IReimDisplayState> {
+export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
     constructor(props: any) {
         super(props)
         this.state = {
             userById: new User(0, '', '', '', '', '', new Role(0, '')),
+            allReimburse: [],
             id: '',
-            author: '',
+            //author: '',
             amount: '',
             submitted: '',
             resolved: '',
@@ -39,7 +28,8 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, IReimDisplay
             resolver: '',
             status: '',
             type: '',
-            success: ''
+            success: '',
+            showMenu: false
         }
     }
 
@@ -57,31 +47,10 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, IReimDisplay
         }
     }
 
-    updateId = (e: any) => {
-        this.setState({
-            ...this.state,
-            id: e.target.value
-        });
-    }
-
-    updateAuthor = (e: any) => {
-        this.setState({
-            ...this.state,
-            author: e.target.value
-        });
-    }
-
     updateAmount = (e: any) => {
         this.setState({
             ...this.state,
             amount: e.target.value
-        });
-    }
-
-    updateSubmitted = (e: any) => {
-        this.setState({
-            ...this.state,
-            submitted: e.target.value
         });
     }
 
@@ -121,11 +90,37 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, IReimDisplay
     }
 
     postReimburse = async (e: SyntheticEvent) => {
+        let today = new Date();
         e.preventDefault();
-        this.props.rUpdate(this.state.id, this.state.userById.user_id, this.state.amount, this.state.submitted, this.state.resolved, this.state.description, this.state.resolver, this.state.status, this.state.type)
+        this.props.rUpdate(this.state.id, this.state.userById.user_id, this.state.amount, `${today.getFullYear()}-${today.getDate()}-${today.getMonth()}`, '', this.state.description, 0, 0, this.state.type)
+    }
+
+    findReimburseByStatus = async (e: any) => {
+        let r;
+        e.preventDefault();
+        if (e.target.value === 'Pending') {
+            r = this.props.rFindByStatus(1)
+        }
+        if (e.target.value === 'Approved') {
+            r = this.props.rFindByStatus(2)
+        }
+        if (e.target.value === 'Denied') {
+            r = this.props.rFindByStatus(3)
+        }
+    }
+
+    setOpen = (e: any) => {
+        e.preventDefault();
+        this.setState({
+            ...this.state,
+            showMenu: !this.state.showMenu
+        })
     }
 
     render() {
+        let rows = this.state.allReimburse.map((e) => {
+            return <ReimburseDisplayRow reimbursement={e} key={'Reimbursement' + e.reimbursement_id} />
+        })
         return (
             <div>
                 <h1>You are logged in as:</h1>
@@ -147,14 +142,47 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, IReimDisplay
                         <Input type="text" id="amount" value={this.state.amount} onChange={this.updateAmount} />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="submitted">Enter today's date</Label>
-                        <Input type="text" id="submitted" value={this.state.submitted} onChange={this.updateSubmitted} />
+                        <Label for="description">Describe why you need the reimbursement</Label>
+                        <Input type="text" id="description" value={this.state.description} onChange={this.updateDescription} />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="resolved"></Label>
-                        <Input type="text" id="resolved" value={this.state.resolved} onChange={this.updateResolved} />
+                        <Label for="type">Enter the type of reimbursement</Label>
+                        <Input type="text" id="type" value={this.state.type} onChange={this.updateType} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Button>Post new reimbursement</Button>
                     </FormGroup>
                 </Form>
+                    <button onClick={this.setOpen}>
+                        Find reimbursement by status
+                        </button>
+                        {
+                    this.state.showMenu
+                        ? (<div className="menu">
+                        <button onClick={this.findReimburseByStatus} value={'Pending'}> Pending </button>
+                        <button onClick={this.findReimburseByStatus} value={'Approved'}> Approved </button>
+                        <button onClick={this.findReimburseByStatus} value={'Denied'}> Denied </button>
+                    </div>) : (
+                                  null
+                              )
+                    }
+                    <Table border="1" bordercolor='white'>
+                        <thead>
+                            <tr>
+                                <td>Author</td>
+                                <td>Amount</td>
+                                <td>Date Submitted</td>
+                                <td>Date Resolved</td>
+                                <td>Description</td>
+                                <td>Resolver</td>
+                                <td>Status</td>
+                                <td>Type</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </Table>
             </div>
         )
     }
