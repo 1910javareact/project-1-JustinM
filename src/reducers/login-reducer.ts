@@ -18,7 +18,8 @@ export const loginReducer = (state = initialState, action:any) => {
         }
         case uLoginTypes.INVALID_CREDENTIALS: {
             return {
-                ...
+                ...state,
+                success: 'Invalid Credentials'
             }
         }
         default:

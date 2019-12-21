@@ -1,4 +1,4 @@
-import { userLogin } from "../remote/project1-clients/Project1User"
+import { userLogin } from "../remote/Project1User"
 
 export const uLoginTypes = {
     INVALID_CREDENTIALS: 'USER_LOGIN_INVALID_CREDENTIALS',
@@ -18,7 +18,10 @@ export const uLogin = (username:string, password:string) => async (dispatch: any
             })
         } else if(res.status === 401) {
             dispatch({
-                type: uLoginTypes.INVALID_CREDENTIALS
+                type: uLoginTypes.INVALID_CREDENTIALS,
+                data: {
+                    success: res.body
+                }
             })
         } else {
             dispatch({

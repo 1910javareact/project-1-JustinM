@@ -2,7 +2,7 @@ import React, { SyntheticEvent } from 'react'
 import { Reimbursement } from '../../models/reimbursement';
 import { User } from '../../models/user';
 import { Role } from '../../models/role';
-import { getUserById } from '../../remote/project1-clients/Project1User';
+import { getUserById } from '../../remote/Project1User';
 import { Form, FormGroup, Label, Input, Button, Table } from 'reactstrap';
 import { ReimburseDisplayRow } from './ReimburseDisplayRow';
 import { Redirect } from 'react-router';

@@ -1,29 +1,17 @@
-import React, { useState } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Example = (props: any) => {
-  const [collapsed, setCollapsed] = useState(true);
-
-  const toggleNavbar = () => setCollapsed(!collapsed);
-
+const Header = () => {
   return (
     <div>
-      <Navbar color='faded' light>
-        <NavbarBrand href='/' className='mr-auto'>Login</NavbarBrand>
-        <NavbarToggler onClick={toggleNavbar} className='mr-2' />
-        <Collapse isOpen={!collapsed} navbar>
-          <Nav navbar>
-            <NavItem>
-              <NavLink href='/user'>User</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href='/reimbursement'>Reimbursements</NavLink>
-            </NavItem>
-          </Nav>
-        </Collapse>
-      </Navbar>
+      <header id='navHeader'>
+        <div>
+          <h1>Brooklyn's 99th Precinct Reimbursement</h1>
+        </div>
+        <Link to='/' className='navLink'>Login</Link> | <Link to='/user' className='navLink'>User</Link> | <Link to='/reimbursement' className='navLink'>Reimbursements</Link>
+      </header>
     </div>
   );
 }
 
-export default Example;
+export default Header;

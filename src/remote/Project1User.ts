@@ -31,7 +31,7 @@ export async function userLogin(username: string, password: string) {
 
 export const getUserById = async (id: number) => {
     try {
-        const response = await userClient.get('/user' + id)
+        const response = await userClient.get('/user', {params: { id }})
         if(response.status === 200) {
             return {
                 status: response.status,

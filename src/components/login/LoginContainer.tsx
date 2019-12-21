@@ -5,7 +5,8 @@ import { uLogin } from '../../action-mappers/login-action-mapper'
 
 const mapStateToProps = (state: IState) => {
     return {
-        user: state.login.user
+        user: state.login.user,
+        success: state.login.success
     }
 }
 

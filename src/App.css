@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+#navHeader {
+  background: '#fff';
+  color: '#333';
+  align-content: 'center';
+  padding: '10px';
+}
+
+.navLink {
+  color: '#333';
+  text-decoration: none;
+}

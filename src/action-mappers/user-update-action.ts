@@ -1,4 +1,4 @@
-import { updateUserAPI } from "../remote/project1-clients/Project1User"
+import { updateUserAPI } from "../remote/Project1User"
 
 export const uUpdateTypes = {
     SUCCESSFUL_UPDATE: 'USER_UPDATE_SUCCESSFUL_UPDATE',

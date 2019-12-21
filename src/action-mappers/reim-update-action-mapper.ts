@@ -1,4 +1,4 @@
-import { postReimAPI, findReimByStatusAPI, findReimByUserAPI, updateReimburseAPI } from "../remote/project1-clients/Project1Reim"
+import { postReimAPI, findReimByStatusAPI, findReimByUserAPI, updateReimburseAPI } from "../remote/Project1Reim"
 
 export const rUpdateTypes = {
     SUCCESSFUL_POST: 'REIMBURSEMENT_POST_SUCESSFUL_POST',

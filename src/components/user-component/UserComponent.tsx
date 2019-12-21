@@ -2,7 +2,7 @@ import React, { SyntheticEvent } from 'react'
 import { Redirect } from 'react-router';
 import { User } from '../../models/user';
 import { Role } from '../../models/role';
-import { getUserById, getAllUsersAPI } from '../../remote/project1-clients/Project1User';
+import { getUserById, getAllUsersAPI } from '../../remote/Project1User';
 import { Button, Table, Form, Label, Input, FormGroup } from 'reactstrap';
 import { UserDisplayRow } from './UserDisplayRow';
 
@@ -53,6 +53,7 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
     }
 
     getAllUsers = async () => {
+        if(this.state.allUsers.length === 0){
         try {
             let u = await getAllUsersAPI()
             if (u.status === 200) {
@@ -64,13 +65,31 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
         } catch (e) {
             console.log(e);
         }
-    }
-
-    updateId = (e: any) => {
+    } else {
         this.setState({
             ...this.state,
-            id: e.target.value
-        });
+            allUsers: []
+        })
+    }
+    }
+
+    updateId = async (e: any) => {
+        e.persist()
+        try {
+            let u = await getUserById(e.target.value)
+            if (u.status === 200) {
+                this.setState({
+                    ...this.state,
+                    id: e.target.value,
+                    uname: u.body[0].username,
+                    fname: u.body[0].first_name,
+                    lname: u.body[0].last_name,
+                    email: u.body[0].email
+                })
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     updateUName = (e: any) => {
@@ -118,9 +137,9 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
                 <p>{this.state.userById.first_name}</p>
                 <p>{this.state.userById.last_name}</p>
                 <p>{this.state.userById.email}</p>
-                <p>{JSON.stringify(this.state.userById.role)}</p>
-                <Button onClick={this.getAllUsers}>View all users</Button>
-                { this.state.allUsers !== null ?
+                <p>{this.state.userById.role.role}</p>
+                <Button onClick={this.getAllUsers}>Toggle all users</Button>
+                { this.state.allUsers.length !== 0 ?
                 (<Table border="1" bordercolor='white'>
                     <thead>
                         <tr>
@@ -128,7 +147,7 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
                             <td>First Name </td>
                             <td>Last Name </td>
                             <td>Email</td>
-                            {/* <td>Roles</td> */}
+                            <td>Roles</td>
                         </tr>
                     </thead>
                     <tbody>

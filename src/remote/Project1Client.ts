@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { environment } from '../../environment'
+import { environment } from '../environment'
 
 export const userClient = axios.create({
     withCredentials:true,

@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 
 interface ILoginProps {
     user:User
+    success: string
     uLogin:(u:string, p:string) => void
 }
 
@@ -54,6 +55,7 @@ export class Login extends React.Component<ILoginProps, any> {
                     </Row>
                     <Button>Sign in</Button>
                 </Form>
+                <p>{this.props.success}</p>
                 <p>{this.props.user.username}</p>
             </div>
         );
