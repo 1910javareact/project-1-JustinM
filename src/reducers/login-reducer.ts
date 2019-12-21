@@ -4,7 +4,8 @@ import { ILoginState } from ".";
 import { uLoginTypes } from "../action-mappers/login-action-mapper";
 
 const initialState: ILoginState = {
-    user: new User(0, '', '', '', '', '', new Role(0, ''))
+    user: new User(0, '', '', '', '', '', new Role(0, '')),
+    success: ''
 }
 
 export const loginReducer = (state = initialState, action:any) => {
@@ -13,6 +14,11 @@ export const loginReducer = (state = initialState, action:any) => {
             return {
                 ...state,
                 user:action.payload.user
+            }
+        }
+        case uLoginTypes.INVALID_CREDENTIALS: {
+            return {
+                ...
             }
         }
         default:

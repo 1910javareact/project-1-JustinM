@@ -6,8 +6,9 @@ import { Role } from "../models/role";
 
 
 const initialState: IReimburseState = {
-    reimburse: new Reimbursement(0, 0, 0, 0, 0, '', 0, 0, 0),
+    reimburse: new Reimbursement(0, 0, 0, '', '', '', 0, 0, 0),
     allReimburse: [],
+    allReimburseUser: [],
     userById: new User(0, '', '', '', '', '', new Role(0, '')),
     id: null,
     amount: null,
@@ -17,16 +18,24 @@ const initialState: IReimburseState = {
     resolver: null,
     status: null,
     type: null,
+    rById: null,
     success: '',
-    showMenu: false
+    showMenu: false,
+    showMenuType: false
 }
 
 export const reimburseReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case rUpdateTypes.FOUND: {
+        case rUpdateTypes.FOUND_STATUS: {
             return {
                 ...state,
-                allReimburse: action.payload.user
+                allReimburse: action.payload.reimbursement
+            }
+        }
+        case rUpdateTypes.FOUND_USER: {
+            return {
+                ...state,
+                allReimburseUser: action.payload.reimbursement
             }
         }
         default:

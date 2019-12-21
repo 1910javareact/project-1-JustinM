@@ -5,11 +5,13 @@ import { Reimbursement } from "../models/reimbursement"
 import { reimburseReducer } from "./reimburse-reducer"
 
 export interface ILoginState {
-    user: User
+    user: User,
+    success: string
 }
 
 export interface IReimburseState {
     reimburse: Reimbursement,
+    allReimburseUser: [],
     allReimburse: [],
     userById: User,
     id: any,
@@ -20,8 +22,10 @@ export interface IReimburseState {
     resolver: any,
     status: any,
     type: any,
+    rById: any,
     success: string,
-    showMenu: boolean
+    showMenu: boolean,
+    showMenuType: boolean
 }
 
 export interface IState {

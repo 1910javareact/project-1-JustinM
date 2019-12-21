@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from 'react'
-//import { Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 import { User } from '../../models/user';
 import { Role } from '../../models/role';
 import { getUserById, getAllUsersAPI } from '../../remote/project1-clients/Project1User';
@@ -45,6 +45,7 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
                     ...this.state,
                     userById: u.body[0]
                 })
+                console.log(this.props.user.user_id);
             }
         } catch (e) {
             console.log(e);
@@ -110,7 +111,7 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
             return <UserDisplayRow user={e} key={'User ' + e.user_id} />
         })
         return (
-            //this.props.user.user_id ?
+            this.props.user.user_id !== undefined ? 
             <div>
                 <h1>You are logged in as:</h1>
                 <p>{this.state.userById.username}</p>
@@ -119,7 +120,8 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
                 <p>{this.state.userById.email}</p>
                 <p>{JSON.stringify(this.state.userById.role)}</p>
                 <Button onClick={this.getAllUsers}>View all users</Button>
-                <Table border="1" bordercolor='white'>
+                { this.state.allUsers !== null ?
+                (<Table border="1" bordercolor='white'>
                     <thead>
                         <tr>
                             <td>Username </td>
@@ -132,7 +134,10 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
                     <tbody>
                         {rows}
                     </tbody>
-                </Table>
+                </Table>) : (
+                    null
+                )
+                }
                 <Form onSubmit={this.updateUser}>
                     <FormGroup>
                         <Label for="user_id">Update user</Label>
@@ -162,8 +167,8 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
                     </FormGroup>
                 </Form>
             </div>
-            //:
-            //<Redirect to = '/login' />
+            :
+            <Redirect to = '/login' />
         )
     }
 }

@@ -16,9 +16,13 @@ export const uLogin = (username:string, password:string) => async (dispatch: any
                     user: res.body
                 }
             })
-        } else {
+        } else if(res.status === 401) {
             dispatch({
                 type: uLoginTypes.INVALID_CREDENTIALS
+            })
+        } else {
+            dispatch({
+                type: uLoginTypes.UNSUCCESSFUL_LOGIN
             })
         }
     } catch (e) {

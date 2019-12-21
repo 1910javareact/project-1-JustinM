@@ -12,6 +12,11 @@ export async function userLogin(username: string, password: string) {
                 status: response.status,
                 body: response.data
             }
+        } else if(response.status === 401) {
+            return {
+                status: response.status,
+                body: 'Invalid credentials'
+            }
         } else {
             return {
                 status: response.status,
@@ -26,7 +31,7 @@ export async function userLogin(username: string, password: string) {
 
 export const getUserById = async (id: number) => {
     try {
-        const response = await userClient.get('/user', { params: { id }})
+        const response = await userClient.get('/user' + id)
         if(response.status === 200) {
             return {
                 status: response.status,

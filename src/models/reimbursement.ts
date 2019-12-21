@@ -2,13 +2,13 @@ export class Reimbursement {
     reimbursement_id: number; 
     author: number;  
     amount: number;  
-    date_submitted: number; 
-    date_resolved: number; 
+    date_submitted: string; 
+    date_resolved: string; 
     description: string; 
     resolver: number; 
     status: number; 
     type: number; 
-    constructor(reimbursement_id: number, author: number, amount: number, date_submitted: number, date_resolved: number, description: string, resolver: number, status: number, type: number) {
+    constructor(reimbursement_id: number, author: number, amount: number, date_submitted: string, date_resolved: string, description: string, resolver: number, status: number, type: number) {
       this.reimbursement_id = reimbursement_id;
       this.author = author;
       this.amount = amount;
