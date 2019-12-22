@@ -40,10 +40,11 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
     async componentDidMount() {
         try {
             let u = await getUserById(this.props.user.user_id)
+            console.log(u);
             if (u.status === 200) {
                 this.setState({
                     ...this.state,
-                    userById: u.body[0]
+                    userById: u.body
                 })
                 console.log(this.props.user.user_id);
             }
@@ -74,17 +75,18 @@ export class UserDisplay extends React.Component<IUserDisplayProps, IUserDisplay
     }
 
     updateId = async (e: any) => {
-        e.persist()
+        let id = e.target.value
         try {
-            let u = await getUserById(e.target.value)
-            if (u.status === 200) {
+            let f = await getUserById(id)
+            if (f.status === 200) {
+                console.log(f);
                 this.setState({
                     ...this.state,
-                    id: e.target.value,
-                    uname: u.body[0].username,
-                    fname: u.body[0].first_name,
-                    lname: u.body[0].last_name,
-                    email: u.body[0].email
+                    id: id,
+                    uname: f.body.username,
+                    fname: f.body.first_name,
+                    lname: f.body.last_name,
+                    email: f.body.email
                 })
             }
         } catch (e) {
