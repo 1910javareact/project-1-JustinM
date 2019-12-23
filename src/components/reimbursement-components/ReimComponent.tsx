@@ -105,9 +105,9 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
     }
 
     postReimburse = async (e: SyntheticEvent) => {
-        let today = new Date();
         e.preventDefault();
-        this.props.rPost(this.state.reimburse_id, this.state.userById.user_id, this.state.amount, `${today.getFullYear()}-${today.getDate()}-${today.getMonth()}`, '', this.state.description, 1, 1, this.state.type)
+        let today = new Date();      
+        this.props.rPost(0, this.state.userById.user_id, this.state.amount, `${today.getFullYear()}-${today.getDate()}-${today.getMonth()}`, '', this.state.description, 1, 1, this.state.type)
     }
 
     findReimburseByStatus = async (e: any) => {
@@ -129,8 +129,8 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
     }
 
     updateReimburse = async (e: SyntheticEvent) => {
-        let today = new Date();
         e.preventDefault();
+        let today = new Date();
         this.props.rUpdateReimburse(this.state.id, `${today.getFullYear()}-${today.getDate()}-${today.getMonth()}`, this.state.userById.user_id, this.state.status)
     }
 
@@ -170,10 +170,10 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
                         <FormGroup>
                             <Label for="reimburse_id" >Post a reimbursement</Label>
                         </FormGroup>
-                        <FormGroup>
+                        {/* <FormGroup>
                             <Label for="reimburse_id" >Enter the next id of the reimbursement </Label>
                             <Input type="number" id="reimburse_id" value={this.state.reimburse_id} onChange={this.updateReimburse_id} required/>
-                        </FormGroup>
+                        </FormGroup> */}
                         <FormGroup>
                             <Label for="amount" >Enter the amount you need reimbursed </Label>
                             <Input type="number" id="amount" value={this.state.amount} onChange={this.updateAmount} required/>
