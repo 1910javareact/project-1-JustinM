@@ -48,3 +48,17 @@
   color: '#333';
   text-decoration: none;
 }
+
+
+.CurrentUser {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+
+#CurrentFirst {
+  margin-bottom: 0em;
+}
+
+#CurrentLast {
+  margin-top: 0em;
+}

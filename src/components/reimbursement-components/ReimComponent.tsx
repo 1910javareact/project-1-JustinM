@@ -10,7 +10,7 @@ import { Redirect } from 'react-router';
 interface IReimDisplayProps {
     user: User
     reimburse: Reimbursement
-    rPost: (id: number, author: number, amount: number, submitted: string, resolved: string, description: string, resolver: number, status: number, type: number) => void;
+    rPost: (id: number, author: number, amount: number, submitted: string, resolved: string, description: string, resolver: any, status: number, type: number) => void;
     rFindByStatus: (status: number) => void
     rFindByUser: (user_id: number) => void
     rUpdateReimburse: (reimburse_id: number, resolved: string, resolver: number, status: number) => void
@@ -47,7 +47,7 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
             if (u.status === 200) {
                 this.setState({
                     ...this.state,
-                    userById: u.body[0]
+                    userById: u.body
                 })
             }
         } catch (e) {
@@ -97,10 +97,17 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
         })
     }
 
+    updateReimburse_id = (e: any) => {
+        this.setState({
+            ...this.state,
+            reimburse_id: e.target.value
+        })
+    }
+
     postReimburse = async (e: SyntheticEvent) => {
         let today = new Date();
         e.preventDefault();
-        this.props.rPost(0, this.state.userById.user_id, this.state.amount, `${today.getFullYear()}-${today.getDate()}-${today.getMonth()}`, '', this.state.description, 0, 0, this.state.type)
+        this.props.rPost(this.state.reimburse_id, this.state.userById.user_id, this.state.amount, `${today.getFullYear()}-${today.getDate()}-${today.getMonth()}`, '', this.state.description, 1, 1, this.state.type)
     }
 
     findReimburseByStatus = async (e: any) => {
@@ -151,29 +158,39 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
             return <ReimburseDisplayRow reimbursement={e} key={'Reimbursement' + e.reimbursement_id} />
         })
         return (
-            this.props.user.user_id !== undefined ?
+            this.props.user.user_id ?
                 <div>
                     <h1>You are logged in as:</h1>
-                    <p>{this.state.userById.username}</p>
-                    <p>{this.state.userById.first_name}</p>
-                    <p>{this.state.userById.last_name}</p>
-                    <p>{this.state.userById.email}</p>
-                    <p>{JSON.stringify(this.state.userById.role)}</p>
+                    <p id="CurrentFirst">{this.state.userById.username}</p>
+                    <p className="CurrentUser">{this.state.userById.first_name}</p>
+                    <p className="CurrentUser">{this.state.userById.last_name}</p>
+                    <p className="CurrentUser">{this.state.userById.email}</p>
+                    <p id="CurrentLast">{this.state.userById.role.role}</p>
                     <Form onSubmit={this.postReimburse}>
                         <FormGroup>
-                            <Label for="author">Post a reimbursement</Label>
+                            <Label for="reimburse_id" >Post a reimbursement</Label>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="amount">Enter the amount you need reimbursed</Label>
-                            <Input type="text" id="amount" value={this.state.amount} onChange={this.updateAmount} />
+                            <Label for="reimburse_id" >Enter the next id of the reimbursement </Label>
+                            <Input type="number" id="reimburse_id" value={this.state.reimburse_id} onChange={this.updateReimburse_id} required/>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="description">Describe why you need the reimbursement</Label>
-                            <Input type="text" id="description" value={this.state.description} onChange={this.updateDescription} />
+                            <Label for="amount" >Enter the amount you need reimbursed </Label>
+                            <Input type="number" id="amount" value={this.state.amount} onChange={this.updateAmount} required/>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="type">Enter the type of reimbursement</Label>
-                            <Input type="text" id="type" value={this.state.type} onChange={this.updateType} />
+                            <Label for="description" >Describe why you need the reimbursement </Label>
+                            <Input type="text" id="description" value={this.state.description} onChange={this.updateDescription} required/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="type">Enter the type of reimbursement </Label>
+                            <select id="type" onChange={this.updateType}required>
+                                <option></option>
+                                <option value="1" >Lodging</option>
+                                <option value="2" >Travel</option>
+                                <option value="3" >Food</option>
+                                <option value="4" >Other</option>
+                            </select>
                         </FormGroup>
                         <FormGroup>
                             <Button>Post new reimbursement</Button>
@@ -189,9 +206,11 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
                                     <button onClick={this.findReimburseByStatus} value={'Pending'}> Pending </button>
                                     <button onClick={this.findReimburseByStatus} value={'Approved'}> Approved </button>
                                     <button onClick={this.findReimburseByStatus} value={'Denied'}> Denied </button>
-                                    <Table border="1" bordercolor='white'>
+                                    {this.props.allReimburse.length !== 0 ?
+                                    (<Table border="1" bordercolor='white'>
                                         <thead>
                                             <tr>
+                                                <td>ID</td>
                                                 <td>Author</td>
                                                 <td>Amount</td>
                                                 <td>Date Submitted</td>
@@ -205,7 +224,9 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
                                         <tbody>
                                             {rows}
                                         </tbody>
-                                    </Table>
+                                    </Table> ) : (
+                                        null
+                                    ) }
                                 </div>) : (
                                     null
                                 )
@@ -224,9 +245,11 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
                                             <Label for="rById">Enter the user id</Label>
                                             <Input type="text" id="rById" value={this.state.rById} onChange={this.updateRById} />
                                         </FormGroup>
+                                        { this.props.allReimburseUser.length !== 0 ? (
                                         <Table border="1" bordercolor='white'>
                                             <thead>
                                                 <tr>
+                                                    <td>ID</td>
                                                     <td>Author</td>
                                                     <td>Amount</td>
                                                     <td>Date Submitted</td>
@@ -240,7 +263,9 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
                                             <tbody>
                                                 {rowUser}
                                             </tbody>
-                                        </Table>
+                                        </Table>) : (
+                                            null
+                                        )}
                                         <FormGroup>
                                             <Button>Find</Button>
                                         </FormGroup>
@@ -262,7 +287,12 @@ export class ReimDisplay extends React.Component<IReimDisplayProps, any> {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="status">Enter the new status of the reimbursement</Label>
-                                <Input type="text" id="status" value={this.state.status} onChange={this.updateStatus} required/>
+                                <select id="status" onChange={this.updateStatus} required>
+                                    <option></option>
+                                    <option value="1">Pending</option>
+                                    <option value="2">Approved</option>
+                                    <option value="3">Denied</option>
+                                </select>
                             </FormGroup>
                             <FormGroup>
                                 <Button>Submit</Button>

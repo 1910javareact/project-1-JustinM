@@ -1,6 +1,8 @@
 import { userClient } from "./Project1Client";
 
-export async function postReimAPI(reimbursement_id: number, author: number, amount: number, date_submitted: string, date_resolved: string, description: string, resolver: number, status: number, type: number) {
+export async function postReimAPI(reimbursement_id: number, author: number, amount: number, date_submitted: string, date_resolved: string, description: string, resolver: any, status: number, type: number) {
+    amount = Number(amount);
+    type = Number(type);
     const post = {
         reimbursement_id,
         author,
@@ -13,7 +15,7 @@ export async function postReimAPI(reimbursement_id: number, author: number, amou
         type
     }
     try {
-        const response = await userClient.patch('/reimbursement', post)
+        const response = await userClient.post('/reimbursement', post)
         if (response.status === 201) {
             return {
                 status: response.status,
@@ -72,6 +74,8 @@ export async function findReimByUserAPI(id: number) {
 }
 
 export async function updateReimburseAPI(reimbursement_id: number, date_resolved: string, resolver: number, status: number) {
+    reimbursement_id = Number(reimbursement_id);
+    status = Number(status);
     const update = {
         reimbursement_id,
         author: undefined,

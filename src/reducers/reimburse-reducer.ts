@@ -4,13 +4,13 @@ import { rUpdateTypes } from "../action-mappers/reim-update-action-mapper";
 import { User } from "../models/user";
 import { Role } from "../models/role";
 
-
 const initialState: IReimburseState = {
     reimburse: new Reimbursement(0, 0, 0, '', '', '', 0, 0, 0),
     allReimburse: [],
     allReimburseUser: [],
     userById: new User(0, '', '', '', '', '', new Role(0, '')),
     id: null,
+    author: null,
     amount: null,
     submitted: null,
     resolved: null,
@@ -36,6 +36,13 @@ export const reimburseReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 allReimburseUser: action.payload.reimbursement
+            }
+        }
+        case rUpdateTypes.FOUND_BYID: {
+            return {
+                ...state,
+                author: action.payload.reimbursement.author,
+                resolver: action.payload.reimbursement.resolver
             }
         }
         default:

@@ -15,6 +15,7 @@ const mapStateToProps = (state: IState, ownProps: any) => {
 
         userById: state.reimburse.userById,
         id: state.reimburse.id,
+        author: state.reimburse.author,
         amount: state.reimburse.amount,
         submitted: state.reimburse.submitted,
         resolved: state.reimburse.resolved,

@@ -15,6 +15,7 @@ export interface IReimburseState {
     allReimburse: [],
     userById: User,
     id: any,
+    author: any,
     amount: any,
     submitted: any,
     resolved: any,

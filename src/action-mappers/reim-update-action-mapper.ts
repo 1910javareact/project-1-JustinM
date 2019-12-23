@@ -7,10 +7,11 @@ export const rUpdateTypes = {
     UNSUCCESSFUL_UPDATE: 'REIMBURSEMENT_UPDATE_FAILED_UPDATE',
     FOUND_STATUS: 'REIMBURSEMENT_STATUS_FIND_SUCCESSFUL',
     FOUND_USER: 'REIMBURSEMENT_USER_FIND_SUCCESSFUL',
-    NOT_FOUND: 'REIMBURSEMENT_FIND_UNSUCCESSFUL'
+    NOT_FOUND: 'REIMBURSEMENT_FIND_UNSUCCESSFUL',
+    FOUND_BYID: 'REIMBURSEMENT_FIND_BYID_SUCCESSFUL'
 }
 
-export const rPost = (id: number, author: number, amount: number, submitted: string, resolved: string, description: string, resolver: number, status: number, type: number) => async (dispatch: any) => {
+export const rPost = (id: number, author: number, amount: number, submitted: string, resolved: string, description: string, resolver: any, status: number, type: number) => async (dispatch: any) => {
     try {
         let res = await postReimAPI(id, author, amount, submitted, resolved, description, resolver, status, type)
         if(res.status === 201) {

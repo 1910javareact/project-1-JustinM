@@ -8,6 +8,7 @@ interface IReimburseDisplayRowProps {
 export const ReimburseDisplayRow: React.FC<IReimburseDisplayRowProps> = (props) => {
     return (
         <tr>
+            <td>{props.reimbursement.reimbursement_id}</td>
             <td>{props.reimbursement.author}</td>
             <td>{props.reimbursement.amount}</td>
             <td>{props.reimbursement.date_submitted}</td>
